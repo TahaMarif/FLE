@@ -11,10 +11,10 @@ from scipy.optimize import curve_fit
 # =============================================================================
 
 # Choix du capteur à analyser : 'ROTAMETRE', 'VENTURI' ou 'DIAPHRAGME'
-CAPTEUR = 'DIAPHRAGME'  # Modifier selon le capteur utilisé
+CAPTEUR = 'ROTAMETRE'  # Modifier selon le capteur utilisé
 
 # Estimation des incertitudes de lecture (à modifier selon votre matériel)
-INCERTITUDE_H_MM = 2.0      # Incertitude de lecture sur la règle (en mm), ex: +/- 1mm donc intervalle de 2
+INCERTITUDE_H_MM = 2.0*1e-3     # Incertitude de lecture sur la règle (en m), ex: +/- 1mm donc intervalle de 2
 INCERTITUDE_DEBIT_REL = 0.05 # Incertitude relative sur le débit (5% pour chronomètre + balance)
 
 # Paramètres physiques
@@ -54,7 +54,7 @@ if CAPTEUR == 'ROTAMETRE':
     deltax = np.full(len(x_raw), INCERTITUDE_H_MM) # Erreur constante de lecture
     
     xlabel = "Hauteur (mm)"
-    titre_graphe = "Étalonnage Rotamètre (Monte-Carlo)"
+    titre_graphe = "Étalonnage Rotamètre" 
     
     # Modèle affine (Q = aH + b)
     def modele(x, a, b):
@@ -69,15 +69,17 @@ elif CAPTEUR in ['VENTURI', 'DIAPHRAGME']:
     # Conversion en Pression (Pa) : P = rho * g * h(m)
     delta_P = RHO * G * (h_mm * 1e-3)
     
-    # X = Racine carrée de la pression (pour avoir une droite)
+    # X = Racine carrée de la pression
     x = np.sqrt(np.abs(delta_P))
     
     # PROPAGATION D'INCERTITUDE complexe :
     # Si H a une incertitude delta_H, quelle est l'incertitude sur sqrt(rho*g*H) ?
     # Calcul par dérivée : d(sqrt(C*H)) = 0.5 * sqrt(C/H) * dH
-    # C = rho * g * 1e-3
-    C = RHO * G * 1e-3
-    deltax = 0.5 * np.sqrt(C / (h_mm + 1e-9)) * INCERTITUDE_H_MM
+    # C = rho * g 
+    C = RHO * G 
+    deltax = 0.5 * np.sqrt(C / (h_mm*1e-3)) * INCERTITUDE_H_MM
+    deltax[0] = 2.1
+    deltax[1] = 1.5
     
     xlabel = r"$\sqrt{\Delta P}$ ($Pa^{1/2}$)"
     titre_graphe = f"Étalonnage {CAPTEUR} (Loi en racine)"
@@ -162,7 +164,7 @@ if CAPTEUR == 'ROTAMETRE':
     y_lower = modele(x_fit_plot, a_mean - 2*a_std, b_mean - 2*b_std)
     ax.fill_between(x_fit_plot, y_lower, y_upper, color="red", alpha=0.2, label="Intervalle confiance 95%")
     
-    print(f"Modèle : Q = a * H + b")
+    print(f"Modèle : Q = a * H + b (Monte Carlo)")
     print(f"a = {a_mean:.3e} ± {2*a_std:.3e} (m^2/s)")
     print(f"b = {b_mean:.3e} ± {2*b_std:.3e} (m^3/s)")
 
