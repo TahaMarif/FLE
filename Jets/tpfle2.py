@@ -101,9 +101,9 @@ plt.errorbar(X, Utot_hfixe,
              capsize=3, 
              label='Profil à h = 220 mm')
 
-plt.xlabel("Position X")
+plt.xlabel("Position $x$ (cm)")
 plt.ylabel("Vitesse totale $U_{tot}$ (m/s)")
-plt.title(r"Évolution de $U_{tot}(x)$ à hauteur fixe (avec incertitudes)")
+plt.title(r"Évolution de $U_{tot}(x)$ à hauteur fixe avec incertitudes")
 plt.legend()
 plt.grid(True)
 plt.show()
@@ -120,9 +120,9 @@ plt.errorbar(h1, Utot1, xerr=delta_h, yerr=err1, fmt='o-', label='X1 = 9.2 cm', 
 plt.errorbar(h2, Utot2, xerr=delta_h, yerr=err2, fmt='s-', label='X2 = 36.2 cm', capsize=3)
 plt.errorbar(h3, Utot3, xerr=delta_h, yerr=err3, fmt='x-', label='X3 = 146.4 cm', capsize=3)
 
-plt.xlabel("Position h (mm)")
-plt.ylabel("Vitesse totale Utot (m/s)")
-plt.title(f"Profils de vitesse avec incertitudes ($\\Delta h = {delta_h}$ mm)")
+plt.xlabel("Position $h$ (mm)")
+plt.ylabel("Vitesse totale $U_{tot}(h)$ (m/s)")
+plt.title(f"Profils de vitesse avec incertitudes associées")
 plt.legend()
 plt.grid(True)
 plt.show()
