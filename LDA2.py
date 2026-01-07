@@ -76,7 +76,7 @@ plt.errorbar(x_mm, u_ms, yerr=u_std, fmt='-o', color='darkgreen', ecolor='orange
 
 plt.xlabel('Position horizontale $x$ (mm)')
 plt.ylabel('Vitesse $U$ (m/s)')
-plt.title(f'Profil de vitesse (Fichier 2) et débit estimé\nQ = {Q_moyen_Lmin:.1f} $\pm$ {incertitude:.1f} L/min')
+plt.title(f'Profil de vitesse et débit estimé\nQ = {Q_moyen_Lmin:.1f} $\pm$ {incertitude:.1f} L/min')
 plt.grid(True, linestyle='--', alpha=0.6)
 plt.legend()
 plt.tight_layout()
