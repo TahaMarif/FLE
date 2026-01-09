@@ -97,7 +97,7 @@ if CAPTEUR == 'ROTAMETRE':
     x = x_raw
 
 # =============================================================================
-# 3. ALGORITHME DE MONTE-CARLO (Cœur du script)
+# 3. ALGORITHME DE MONTE-CARLO 
 # =============================================================================
 
 plt.close('all')
